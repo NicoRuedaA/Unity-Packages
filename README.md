@@ -1,74 +1,64 @@
-# Unity Singleton & Tools
+# Unity Packages & Utilities
 
-Una colección de implementaciones robustas y eficientes del patrón Singleton para Unity, diseñadas para facilitar la gestión de instancias globales tanto en clases de C# puro como en `MonoBehaviour`.
+Una colección completa de herramientas, patrones de diseño y utilidades para potenciar el desarrollo en Unity, optimizando desde la arquitectura del código hasta el flujo de trabajo en el editor.
 
-## Características
+---
 
-- **ISingleton**: Interfaz base para garantizar una estructura consistente de inicialización y limpieza.
-- **MonoSingleton<T>**: Implementación para `MonoBehaviour` que se destruye al cambiar de escena. Crea automáticamente el GameObject si no existe en la escena.
-- **PersistentMonoSingleton<T>**: Extensión de `MonoSingleton` que utiliza `DontDestroyOnLoad` para persistir entre escenas.
-- **Singleton<T>**: Implementación para clases genéricas de C# (thread-safe).
+## 💎 Unity Singleton System
+
+Implementaciones robustas y thread-safe del patrón Singleton, diseñadas para una gestión de instancias global limpia y eficiente.
+
+### Características
+- **ISingleton**: Interfaz base para garantizar una estructura consistente.
+- **MonoSingleton<T>**: Para componentes de escena que se destruyen al cambiar de nivel.
+- **PersistentMonoSingleton<T>**: Para managers globales que persisten entre escenas (`DontDestroyOnLoad`).
+- **Singleton<T>**: Implementación para clases de C# puro (thread-safe).
 - **Control de Estado**: Seguimiento del estado de inicialización (`None`, `Initializing`, `Initialized`).
-- **Samples Incluidos**: Ejemplos prácticos de `GameManager` (persistente) y `SceneGameManager` (volátil).
 
-## Instalación
-
-### Via Unity Package Manager (UPM)
-Añade la siguiente línea al archivo `manifest.json` de tu proyecto:
-
-```json
-"com.unitycommunity.unitysingleton": "https://github.com/tu-usuario/unity-singleton.git"
-```
-
-O importa el archivo `.asmdef` directamente en tu carpeta de Scripts.
-
-## Uso
-
-### 1. MonoSingleton (Para componentes de escena)
-Ideal para managers que solo deben existir en una escena específica.
-
-```csharp
-public class MySceneManager : MonoSingleton<MySceneManager>
-{
-    public void DoSomething() => Debug.Log("Trabajando en la escena actual");
-}
-```
-
-### 2. PersistentMonoSingleton (Para Managers Globales)
-Ideal para sistemas de audio, guardado o gestión de red que deben persistir durante todo el juego.
-
+### Ejemplo de Uso (Persistent)
 ```csharp
 public class GameManager : PersistentMonoSingleton<GameManager>
 {
     protected override void OnInitialized()
     {
-        // Configuración inicial tras crearse el singleton
+        Debug.Log("GameManager global inicializado.");
     }
 }
 ```
 
-### 3. Singleton C# (Sin MonoBehaviour)
-Para lógica de datos o servicios que no requieren estar en el árbol de GameObjects.
+---
 
-```csharp
-public class DataService : Singleton<DataService>
-{
-    public string GetData() => "Datos del servicio";
-}
+## 🛠️ Editor Tools (`/Tools`)
+
+Aumenta tu productividad con utilidades que automatizan las tareas más tediosas del setup inicial.
+
+- **Setup de Carpetas**: Menú `Tools/Setup/Create Default Folders` para generar la estructura `_Project`, `Scripts`, `Art`, `Scenes`.
+- **Manifest Sync**: Reemplaza el `manifest.json` de tu proyecto directamente desde un GitHub Gist.
+- **Acceso Rápido a Paquetes**: Instalación instantánea de Input System, Post Processing y Cinemachine desde el menú superior.
+
+---
+
+## 📄 Text File Reader (`/Text file reader`)
+
+Procesa archivos de texto de forma visual y sencilla.
+
+- **TextReader Component**: Asigna un `TextAsset` y separa automáticamente las líneas en un array de strings.
+- **Previsualización en Editor**: Utiliza `OnValidate` para ver los resultados instantáneamente en el Inspector sin necesidad de darle a Play.
+
+---
+
+## 🚀 Instalación
+
+Añade la siguiente línea al archivo `manifest.json` de tu proyecto Unity:
+
+```json
+"com.unitycommunity.unitysingleton": "https://github.com/tu-usuario/unity-packages.git"
 ```
 
-## Estructura del Proyecto
-
-- **Runtime**: Contiene el núcleo del sistema de Singletons.
-- **Samples**: Ejemplos de implementación para entender el flujo de carga y acceso.
-- **Tools**: Utilidades adicionales para el flujo de trabajo en Unity.
-
-## API Principal
-
-- `Instance`: Propiedad estática para acceder a la instancia única.
-- `InitializeSingleton()`: Método para forzar o personalizar la inicialización.
-- `OnInitializing()` / `OnInitialized()`: Hooks protegidos para ejecutar lógica en momentos clave del ciclo de vida.
-- `IsInitialized`: Propiedad booleana para verificar el estado.
+## Estructura del Repositorio
+- `UnitySingleton/`: Lógica central de Singletons y samples.
+- `Tools/`: Scripts de extensión del editor.
+- `Text file reader/`: Componentes para lectura de datos.
 
 ## Licencia
 Este proyecto está bajo la licencia MIT.
