@@ -1,64 +1,112 @@
 # Unity Packages & Utilities
 
-Una colección completa de herramientas, patrones de diseño y utilidades para potenciar el desarrollo en Unity, optimizando desde la arquitectura del código hasta el flujo de trabajo en el editor.
+[![Unity](https://img.shields.io/badge/Unity-2021%2B-black?logo=unity)](https://unity.com/)
+[![C#](https://img.shields.io/badge/C%23-10.0-purple?logo=csharp)](https://learn.microsoft.com/en-us/dotnet/csharp/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
+A collection of reusable Unity utilities covering common architecture patterns and editor productivity tools. Designed to be dropped into any project via UPM or manual install.
 
 ---
 
-## 💎 Unity Singleton System
+## 📦 What's included
 
-Implementaciones robustas y thread-safe del patrón Singleton, diseñadas para una gestión de instancias global limpia y eficiente.
+### 💎 Singleton System
 
-### Características
-- **ISingleton**: Interfaz base para garantizar una estructura consistente.
-- **MonoSingleton<T>**: Para componentes de escena que se destruyen al cambiar de nivel.
-- **PersistentMonoSingleton<T>**: Para managers globales que persisten entre escenas (`DontDestroyOnLoad`).
-- **Singleton<T>**: Implementación para clases de C# puro (thread-safe).
-- **Control de Estado**: Seguimiento del estado de inicialización (`None`, `Initializing`, `Initialized`).
+Thread-safe Singleton implementations for Unity — covering both MonoBehaviour and plain C# classes.
 
-### Ejemplo de Uso (Persistent)
+| Class | Use case |
+|---|---|
+| `ISingleton` | Base interface — enforces consistent structure |
+| `MonoSingleton<T>` | Scene-scoped singleton, destroyed on scene change |
+| `PersistentMonoSingleton<T>` | Global manager, survives scene loads (`DontDestroyOnLoad`) |
+| `Singleton<T>` | Pure C# singleton, thread-safe, no MonoBehaviour dependency |
+
+All implementations track initialization state (`None` → `Initializing` → `Initialized`) to prevent double-init bugs.
+
+**Usage:**
+
 ```csharp
 public class GameManager : PersistentMonoSingleton<GameManager>
 {
     protected override void OnInitialized()
     {
-        Debug.Log("GameManager global inicializado.");
+        Debug.Log("GameManager ready.");
     }
 }
+
+// Access from anywhere:
+GameManager.Instance.DoSomething();
 ```
 
 ---
 
-## 🛠️ Editor Tools (`/Tools`)
+### 🛠️ Editor Tools (`/Tools`)
 
-Aumenta tu productividad con utilidades que automatizan las tareas más tediosas del setup inicial.
+Custom Editor menu extensions to automate common Unity project setup tasks.
 
-- **Setup de Carpetas**: Menú `Tools/Setup/Create Default Folders` para generar la estructura `_Project`, `Scripts`, `Art`, `Scenes`.
-- **Manifest Sync**: Reemplaza el `manifest.json` de tu proyecto directamente desde un GitHub Gist.
-- **Acceso Rápido a Paquetes**: Instalación instantánea de Input System, Post Processing y Cinemachine desde el menú superior.
-
----
-
-## 📄 Text File Reader (`/Text file reader`)
-
-Procesa archivos de texto de forma visual y sencilla.
-
-- **TextReader Component**: Asigna un `TextAsset` y separa automáticamente las líneas en un array de strings.
-- **Previsualización en Editor**: Utiliza `OnValidate` para ver los resultados instantáneamente en el Inspector sin necesidad de darle a Play.
+- **Create Default Folders** — `Tools > Setup > Create Default Folders`  
+  Generates the standard `_Project/Scripts`, `Art`, `Scenes`, `Prefabs` structure in one click.
+- **Manifest Sync** — Pulls and replaces `manifest.json` directly from a GitHub Gist.
+- **Quick Package Install** — One-click install for Input System, Post Processing, and Cinemachine from the top menu.
 
 ---
 
-## 🚀 Instalación
+### 📄 Text File Reader (`/Text file reader`)
 
-Añade la siguiente línea al archivo `manifest.json` de tu proyecto Unity:
+A lightweight component for reading and parsing text assets at edit-time or runtime.
 
-```json
-"com.unitycommunity.unitysingleton": "https://github.com/tu-usuario/unity-packages.git"
+- Assign any `TextAsset` and the component automatically splits it into a `string[]` by line.
+- Uses `OnValidate` for instant Inspector preview — no need to enter Play Mode to verify the data.
+
+---
+
+## 🚀 Installation
+
+**Option A — Via UPM (Git URL):**
+
+In Unity: `Window > Package Manager > + > Add package from git URL`:
+
+```
+https://github.com/NicoRuedaA/Unity-Packages.git
 ```
 
-## Estructura del Repositorio
-- `UnitySingleton/`: Lógica central de Singletons y samples.
-- `Tools/`: Scripts de extensión del editor.
-- `Text file reader/`: Componentes para lectura de datos.
+**Option B — Manual:**
 
-## Licencia
-Este proyecto está bajo la licencia MIT.
+Clone or download the repo and copy the desired folder into your project's `Assets/` directory.
+
+---
+
+## Project Structure
+
+```
+Unity-Packages/
+├── Tools/                  # Editor menu extensions
+│   ├── FolderSetup.cs      # Default folder creator
+│   ├── ManifestSync.cs     # manifest.json updater
+│   └── QuickPackages.cs    # One-click package installer
+├── UnitySingleton/         # Singleton implementations
+│   ├── ISingleton.cs
+│   ├── MonoSingleton.cs
+│   ├── PersistentMonoSingleton.cs
+│   └── Singleton.cs
+└── TextFileReader/         # Text asset component
+    └── TextReader.cs
+```
+
+> Note: Folder names may vary slightly — check the repo tree for the actual structure.
+
+---
+
+## Context
+
+Built to solve repetitive setup tasks across multiple Unity projects. The Singleton system in particular was extracted from production use in [Mobalike](https://github.com/NicoRuedaA/Mobalike) to be reusable across projects.
+
+---
+
+## License
+
+MIT — free to use in personal and commercial projects.
+
+---
+
+Developed by [Nico Rueda](https://github.com/NicoRuedaA)
