@@ -10,7 +10,7 @@ A collection of reusable Unity utilities covering common architecture patterns a
 
 ## 📦 What's included
 
-### 💎 Singleton System
+### Singleton System
 
 Thread-safe Singleton implementations for Unity — covering both MonoBehaviour and plain C# classes.
 
@@ -40,7 +40,7 @@ GameManager.Instance.DoSomething();
 
 ---
 
-### 🛠️ Editor Tools (`/Tools`)
+### Editor Tools (`/Tools`)
 
 Custom Editor menu extensions to automate common Unity project setup tasks.
 
@@ -51,7 +51,7 @@ Custom Editor menu extensions to automate common Unity project setup tasks.
 
 ---
 
-### 📄 Text File Reader (`/Text file reader`)
+### Text File Reader (`/Text file reader`)
 
 A lightweight component for reading and parsing text assets at edit-time or runtime.
 
@@ -60,7 +60,7 @@ A lightweight component for reading and parsing text assets at edit-time or runt
 
 ---
 
-## 🚀 Installation
+## Installation
 
 **Option A — Via UPM (Git URL):**
 
